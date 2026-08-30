@@ -40,6 +40,16 @@ const INTRO: MediaItem[] = [
   },
 ];
 
+const R2_BASE =
+  "https://pub-d3956d58a15a4a7699662ffbc0748825.r2.dev/momacka";
+
+const R2_VIDEO: Record<string, string> = {
+  muzika: `${R2_BASE}/muzikasi.mp4`,
+  vecera: `${R2_BASE}/vecera.mp4`,
+  sredina: `${R2_BASE}/nastavak.mp4`,
+  majica: `${R2_BASE}/majica.mp4`,
+};
+
 const MUSIC: MediaItem[] = [
   {
     id: "muzika-01",
@@ -51,7 +61,7 @@ const MUSIC: MediaItem[] = [
   {
     id: "muzika-video",
     type: "video",
-    src: "/photos/muzika/video.mp4",
+    src: R2_VIDEO.muzika,
     thumb: "/photos/muzika/poster.jpg",
     alt: "Muzikaši sviraju",
     caption: "Tamburaši",
@@ -62,7 +72,7 @@ const DINNER: MediaItem[] = [
   {
     id: "vecera-video",
     type: "video",
-    src: "/photos/vecera/204256.mp4",
+    src: R2_VIDEO.vecera,
     thumb: "/photos/vecera/204256-poster.jpg",
     alt: "Večera",
     caption: "Pa je bilo vrijeme da si pojedemo nekaj",
@@ -200,7 +210,7 @@ function toMediaItems(
     return {
       id: `${folder}-${file}`,
       type: isVideo ? "video" : "image",
-      src: `/photos/${folder}/${file}`,
+      src: isVideo && R2_VIDEO[folder] ? R2_VIDEO[folder] : `/photos/${folder}/${file}`,
       alt,
       thumb: isVideo ? `/photos/${folder}/${base}-poster.jpg` : undefined,
     };
