@@ -199,31 +199,47 @@ async function syncFolder(fromRel: string, toRel: string) {
   );
 }
 
+const R2_POSTER: Record<string, string> = {
+  sredina: "/photos/sredina/20260829_221257-poster.jpg",
+  majica: "/photos/majica/20260830_010922-poster.jpg",
+};
+
 function toMediaItems(
   files: string[],
   folder: string,
   alt: string,
 ): MediaItem[] {
-  return files.map((file) => {
-    const isVideo = /\.(mp4|webm)$/i.test(file);
-    const base = file.replace(/\.[^.]+$/, "");
-    return {
+  const images = files
+    .filter((file) => !/-poster\./i.test(file) && !/\.(mp4|webm)$/i.test(file))
+    .map((file) => ({
       id: `${folder}-${file}`,
-      type: isVideo ? "video" : "image",
-      src: isVideo && R2_VIDEO[folder] ? R2_VIDEO[folder] : `/photos/${folder}/${file}`,
+      type: "image" as const,
+      src: `/photos/${folder}/${file}`,
       alt,
-      thumb: isVideo ? `/photos/${folder}/${base}-poster.jpg` : undefined,
-    };
-  });
+    }));
+
+  const videoSrc = R2_VIDEO[folder];
+  if (!videoSrc) return images;
+
+  return [
+    ...images,
+    {
+      id: `${folder}-video`,
+      type: "video",
+      src: videoSrc,
+      alt,
+      thumb: R2_POSTER[folder],
+    },
+  ];
 }
 
 export async function getMid(): Promise<MediaItem[]> {
   const path = await import("path");
   await syncFolder("slike/sredina", "public/photos/sredina");
   const dir = path.join(process.cwd(), "public/photos/sredina");
-  const files = (await listMediaFiles(dir))
-    .filter((file) => !/-poster\./i.test(file))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const files = (await listMediaFiles(dir)).sort((a, b) =>
+    a.localeCompare(b, undefined, { numeric: true }),
+  );
   const featuredName = "20260829_204137.jpg";
   const ordered = [
     ...files.filter((file) => file === featuredName),
@@ -241,9 +257,9 @@ async function getSyncedFolder(
   const path = await import("path");
   await syncFolder(fromRel, toRel);
   const dir = path.join(process.cwd(), toRel);
-  const files = (await listMediaFiles(dir))
-    .filter((file) => !/-poster\./i.test(file))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const files = (await listMediaFiles(dir)).sort((a, b) =>
+    a.localeCompare(b, undefined, { numeric: true }),
+  );
   return toMediaItems(files, folder, alt);
 }
 
