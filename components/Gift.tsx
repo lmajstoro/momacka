@@ -11,8 +11,8 @@ type GiftProps = {
 
 export default function Gift({ items }: GiftProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const opening = items.slice(0, 3);
-  const punchline = items[3];
+  const punchline = items[items.length - 1];
+  const opening = items.slice(0, -1);
 
   return (
     <section id="poklon" className="px-2 py-16 sm:px-4 sm:py-20">
@@ -26,12 +26,12 @@ export default function Gift({ items }: GiftProps) {
       </div>
 
       <div className="mx-auto grid max-w-7xl grid-cols-3 gap-1.5 sm:gap-2">
-        {opening.map((item, index) => (
+        {opening.slice(0, 3).map((item, index) => (
           <button
             key={item.id}
             type="button"
             onClick={() => setOpenIndex(index)}
-            className="group relative aspect-[3/4] overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+            className="group relative aspect-[3/4] w-full overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
             aria-label={item.alt}
           >
             <Image
@@ -46,11 +46,31 @@ export default function Gift({ items }: GiftProps) {
         ))}
       </div>
 
+      <div className="mx-auto mt-1.5 grid max-w-7xl grid-cols-1 gap-1.5 sm:mt-2 sm:grid-cols-3 sm:gap-2">
+        {opening.slice(3).map((item, index) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => setOpenIndex(index + 3)}
+            className="relative w-full overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+            style={{ aspectRatio: "4 / 3" }}
+            aria-label={item.alt}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.src}
+              alt={item.alt}
+              className="absolute inset-0 h-full w-full object-contain"
+            />
+          </button>
+        ))}
+      </div>
+
       {punchline ? (
         <div className="mx-auto mt-8 flex max-w-7xl flex-col items-center px-2 sm:mt-10">
           <button
             type="button"
-            onClick={() => setOpenIndex(3)}
+            onClick={() => setOpenIndex(items.length - 1)}
             className="group relative aspect-[3/4] w-full max-w-md overflow-hidden bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gold md:w-[46%]"
             aria-label={punchline.alt}
           >
@@ -62,8 +82,8 @@ export default function Gift({ items }: GiftProps) {
               className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             />
             <span className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/55 to-transparent px-3 pb-2.5 pt-10">
-              <span className="block text-center font-serif text-[0.7rem] leading-snug text-cream/90 sm:text-xs">
+            <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/55 to-transparent px-4 pb-3.5 pt-12">
+              <span className="block text-center font-serif text-base leading-snug text-cream sm:text-lg">
                 Ako nekog zanima gdje su završili novci iz kuverte :)
               </span>
             </span>

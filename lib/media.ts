@@ -130,6 +130,27 @@ const GIFT: MediaItem[] = [
     caption: "Kuverta",
   },
   {
+    id: "poklon-05",
+    type: "image",
+    src: "/photos/poklon/05-sat-kutija.jpg",
+    alt: "Sat u kutiji",
+    caption: "Tissot",
+  },
+  {
+    id: "poklon-06",
+    type: "image",
+    src: "/photos/poklon/06-gravura.jpg",
+    alt: "Gravura na satu",
+    caption: "Moja mačka",
+  },
+  {
+    id: "poklon-07",
+    type: "image",
+    src: "/photos/poklon/07-cestitka.jpg",
+    alt: "Čestitka od ekipe",
+    caption: "Čestitka",
+  },
+  {
     id: "poklon-04",
     type: "image",
     src: "/photos/poklon/04.jpg",
