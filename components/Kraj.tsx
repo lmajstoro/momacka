@@ -48,8 +48,8 @@ export default function Kraj({ items }: KrajProps) {
           <span className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
         </button>
         <p className="mt-5 max-w-md px-4 text-center font-serif text-lg leading-snug text-cream/85 sm:text-xl">
-          Hvala ti Nikola na top atmosferi, hrani, društvu i zabavi. Uživaj
-          tako cijeli život, zaslužio si.
+          Neka ti ova večer ostane u najljepšem sjećanju, a brak koji je pred
+          tobom bude još bolji!!!
         </p>
       </div>
 
