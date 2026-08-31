@@ -46,7 +46,7 @@ export default function Gift({ items }: GiftProps) {
         ))}
       </div>
 
-      <div className="mx-auto mt-1.5 grid max-w-7xl grid-cols-1 gap-1.5 sm:mt-2 sm:grid-cols-3 sm:gap-2">
+      <div className="mx-auto mt-1.5 grid max-w-7xl grid-cols-3 gap-1.5 sm:mt-2 sm:gap-2">
         {opening.slice(3).map((item, index) => (
           <button
             key={item.id}
